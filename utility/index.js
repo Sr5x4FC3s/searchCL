@@ -1,6 +1,6 @@
-const axios = require('axios');
-const fs = require('fs');
-const readline = require('readline');
+const axios       = require('axios');
+const fs          = require('fs');
+const readline    = require('readline');
 
 const rl = readline.createInterface({
   input: process.stdin,
