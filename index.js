@@ -12,7 +12,10 @@ const application = async () => {
   }).then(result => {
     if (result[1] === '') {
       answers[1] = 'sfbay';
-    };
+    } else {
+      let removedSpaces = tools.prep(answers[1]);
+      answers[1] = removedSpaces;
+    }
     return answers;
   }).then(result => {
     return new Promise (resolve => {
@@ -27,6 +30,9 @@ const application = async () => {
         resolve(write);
       })
     }).then(result => {
+      tools.questions.readlineClose();
+    }).catch(error => {
+      console.log(error);
       tools.questions.readlineClose();
     })
   })

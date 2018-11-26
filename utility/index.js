@@ -8,7 +8,7 @@ const rl = readline.createInterface({
 });
 
 const questions = {
-  questions: ['Enter item you want to search: ', 'Enter area to be searched. Default will be San Francisco Bay Area. Press "Enter" to skip: '],
+  questions: ['Enter item you want to search: ', 'Enter city to be searched. Default will be San Francisco Bay Area, California. Press "Enter" to skip: '],
   readline: (Qelement) => {
     return new Promise (resolve => {
       rl.question(Qelement, (answer) => {
@@ -19,7 +19,7 @@ const questions = {
   readlineClose: () => {
     rl.close();
   }
-}
+};
 
 const fetch = (param1, param2) => {
     let promiseArray = [
@@ -67,6 +67,7 @@ const fetch = (param1, param2) => {
     })
     .catch(error => {
       console.log(error)
+      return 'Searched City is not on craigslist. If you\'re sure that it exists, check your spelling. Otherwise try a different search entry or city.';
     });
 };
 
@@ -83,7 +84,7 @@ const filter = async (array, filter) => {
     }
   })
   return results;
-}
+};
 
 const write = (array) => {
   let writeStream = fs.createWriteStream('./list/items.txt');
@@ -97,11 +98,19 @@ const write = (array) => {
   }).catch(err => {
     console.log(err);
   })
+};
+
+const removeSpaces = (input) => {
+  let regex = / /gi;
+  let areaValue = input;
+  let removeSpace = areaValue.replace(regex, '');
+  return removeSpace;
 }
 
 module.exports = {
   fetch: fetch,
   questions: questions,
   filter: filter,
-  write: write
+  write: write,
+  prep: removeSpaces,
 };
